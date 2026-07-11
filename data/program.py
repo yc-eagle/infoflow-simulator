@@ -194,13 +194,42 @@ exit_df = df[df["action_type"] == "exit"]
 print(f"\n整体通关率：{(exit_df['dropout_flag'] == 0).mean():.2%}")
 print(f"整体放弃率：{exit_df['dropout_flag'].mean():.2%}")
 
-print("\n各起始阶段通关率：")
-stage_clear_rate = exit_df.groupby("level_id").apply(
-    lambda x: (x["dropout_flag"] == 0).mean()
-).round(4).mul(100).astype(str) + " %"
-print(stage_clear_rate.to_string())
+# ==========各起始阶段的本层通关率 ==========
 
-print("=" * 60)
+temp_df = df.copy()
+temp_df["session_id"] = (temp_df["action_type"] == "enter").cumsum()
+
+# 提取每个会话的基础信息
+session_start = temp_df[temp_df["action_type"] == "enter"][["session_id", "level_id"]].rename(
+    columns={"level_id": "start_stage"}
+)
+session_max_stage = temp_df.groupby("session_id")["level_id"].max().reset_index().rename(
+    columns={"level_id": "max_stage"}
+)
+session_final = temp_df[temp_df["action_type"] == "exit"][["session_id", "dropout_flag"]]
+
+# 合并会话全量信息
+session_info = session_start.merge(session_max_stage, on="session_id").merge(session_final, on="session_id")
+
+# 定义单层通关规则
+def judge_clear_current(row):
+    if row["start_stage"] == MAX_STAGE:
+        return row["dropout_flag"] == 0
+    else:
+        return row["max_stage"] > row["start_stage"]
+
+session_info["clear_current_stage"] = session_info.apply(judge_clear_current, axis=1)
+
+# 输出统计结果
+print("\n各起始阶段的本层通关率：")
+stage_clear_rate = (
+    session_info.groupby("start_stage")["clear_current_stage"]
+    .mean()
+    .round(4)
+    .mul(100)
+    .astype(str) + " %"
+)
+print(stage_clear_rate.to_string())
 
 # 保存CSV
 df.to_csv("maze_stage_behavior_logs_seed710.csv", index=False, encoding="utf-8-sig")
