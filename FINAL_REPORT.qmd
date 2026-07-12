@@ -1,7 +1,11 @@
 
 ---
 title: "InfoFlow Simulator: A Telemetry Dashboard for Information Engagement Analytics"
-author: Team Members
+author: 
+  - Yicheng Jiang
+  - Shuoyang Jin
+  - Jiaxin Wang
+  - Quanquan Lu
 date: today
 format:
   pdf: default
