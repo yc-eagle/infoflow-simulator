@@ -144,9 +144,9 @@ git push origin --delete feature/your-task-name   # Delete remote branch
 
 ## 5. Team Members & Branch Assignments
 
-| Member | GitHub Username | Recommended Branch Name | Core Task |
+| Member | GitHub Username | Branch Name | Core Task |
 | :--- | :--- | :--- | :--- |
-| Yicheng Jiang (Team Lead) | yc-eagle | `feature/integration` `feature/docs-organization` | Initialization, data schema, final presentation, overall integration |
+| Yicheng Jiang (Team Lead) | yc-eagle | `feature/integration` | Initialization, data schema, final presentation, overall integration |
 | Shuoyang Jin | Caprielle | `feature/sql-model` | Simulation engine, SQL queries, pandas cleaning, regression/classification models |
 | Jiaxin Wang | Cleo7758 | `feature/dashboard` | Streamlit dashboard development, deployment configuration |
 | Quanquan Lu | 677-lqq68 | `feature/narrative` | Report writing, README, PPT, theoretical framing, AI usage disclosure |
