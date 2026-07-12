@@ -1,0 +1,113 @@
+
+---
+title: "InfoFlow Simulator: A Telemetry Dashboard for Information Engagement Analytics"
+author: Team Members
+date: today
+format:
+  pdf: default
+toc: true
+number-sections: true
+bibliography: references.bib
+---
+
+# 1. Introduction
+
+## Background
+In the AI-driven media environment, understanding how audiences interact with information has become increasingly important. Traditional communication research methods, such as surveys and interviews, mainly depend on self-reported data. However, these approaches may suffer from recall bias and social desirability bias.
+
+At the same time, laboratory-based approaches such as eye-tracking and EEG can provide detailed measurements of user attention, but they are expensive and difficult to scale.
+
+This project explores an alternative approach: a lightweight telemetry-based simulation framework for analyzing information engagement. By recording simulated user behaviors, including navigation paths, dwell time, and dropout events, the project investigates how information complexity influences attention retention and cognitive load.
+## Research Question
+The main research question of this project is:
+
+> How does information complexity affect user attention retention and cognitive load?
+
+To answer this question, we develop a simulation environment that generates behavioral telemetry data from virtual users navigating through information structures with different complexity levels.
+# 2. Data Source
+
+## Dataset
+This project uses a self-generated synthetic dataset produced by a Python-based simulation engine.
+
+Instead of collecting real user data, we simulate virtual users interacting with information maze environments with different complexity levels. Each interaction generates behavioral logs that represent user engagement patterns.
+
+The dataset contains the following variables:
+
+- `user_id`: identifier of each simulated user
+- `level_id`: information complexity level
+- `action_timestamp`: time of each interaction
+- `action_type`: user action type (enter, click, exit)
+- `dwell_time`: time spent on each information node
+- `dropout_flag`: whether the user abandoned the task
+
+Approximately 500–1,000 behavioral records will be generated for analysis.
+## Data Preparation
+
+# 3. Method
+
+## Simulation Design
+The project follows a simulation-telemetry-dashboard pipeline.
+
+Virtual users navigate through information maze environments representing different levels of information complexity. During the simulation, user behaviors are recorded as telemetry logs.
+
+The simulation captures three important engagement indicators:
+
+- Navigation behavior
+- Time spent on information nodes
+- Task abandonment behavior
+
+This design allows us to examine how structural complexity affects information engagement.
+## Analysis Method
+
+# 4. Results
+
+## Simulation Results
+
+## Figures
+
+# 5. Limitations and Future Work
+
+# 6. Team Collaboration
+
+## Team Roles and Responsibilities
+The project was developed through a collaborative workflow, with each team member responsible for different components of the system. The team divided responsibilities based on technical specialization while maintaining communication during integration.
+
+### Simulation Engine and System Architecture (Yicheng Jiang)
+
+### Data Analysis and Predictive Modeling (Shuoyang Jin)
+
+### Frontend Visualization and Interactive Dashboard (Jiaxin Wang)
+The frontend development component was responsible for transforming simulation outputs into an interactive dashboard that allows users to explore information engagement patterns.
+
+The main responsibilities included:
+
+- Setting up the Streamlit-based frontend development environment and resolving related dependency issues.
+- Designing the multi-page dashboard structure to organize different analytical views.
+- Implementing interactive visualizations using Plotly, including heatmaps, retention curves, and other engagement-related charts.
+- Developing user interaction components such as sliders and checkboxes, allowing users to dynamically adjust simulation parameters.
+
+A major contribution of this component was ensuring consistency between the simulation engine and the visualization layer. During the integration process, global parameters such as `RANDOM_SEED` and `BASE_DWELL_TIME` were reviewed and synchronized between frontend and backend components. This parameter alignment ensured that the dashboard presented results generated under the same experimental conditions as the simulation system.
+
+The frontend module was developed independently through the `feature/dashboard` branch following the team's Git workflow. After testing and refinement, the implementation was committed and pushed to the shared repository for integration with other project components.
+
+### Narrative Development and Research Communication (Quanquan Lu)
+
+## Development Workflow
+
+## Integration and Coordination
+
+# 7. Conclusion
+
+# 8. AI Usage Disclosure
+AI tools were used during this project to support development and documentation.
+
+The main uses include:
+
+- Generating boilerplate code suggestions
+- Debugging programming issues
+- Explaining unfamiliar Python libraries and syntax
+
+All AI-assisted outputs were reviewed, tested, and verified by team members.
+
+AI tools were used as assistance rather than replacement for human decision-making. The team remains responsible for the accuracy, quality, and originality of the final report.
+# References
