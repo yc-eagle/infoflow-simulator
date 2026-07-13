@@ -23,7 +23,7 @@ stage_base_difficulty = {
 }
 
 # ========== 侧边栏 ==========
-st.sidebar.header("🎛️ 实验参数")
+st.sidebar.header("🎛️ 实验参数 ")
 info_complexity = st.sidebar.slider("信息复杂度（模拟模式生效）", 1, 5, 3)
 top_n = st.sidebar.slider("显示信息块数量", 1, 5, 5)
 
