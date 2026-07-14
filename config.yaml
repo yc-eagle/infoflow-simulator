@@ -1,0 +1,43 @@
+# ============================================================
+# InfoFlow Simulator — Simulation Engine Configuration
+# Modify values here to run stress tests; no code changes needed.
+# ============================================================
+
+# --- Randomness & Scale ---
+random_seed: 710
+target_logs: 2000
+num_users: 130
+max_stage: 5
+
+# --- Behavioral Core Parameters ---
+base_dwell_time: 2.5       # seconds; baseline dwell per node
+base_accuracy: 0.85         # baseline answer correctness
+difficulty_penalty: 0.55    # difficulty → accuracy penalty coefficient
+difficulty_noise: 0.15      # per-stage difficulty random jitter (±)
+error_dwell_multiplier: 1.4 # how much longer a wrong answer takes
+
+# --- Information Density & Familiarity Coefficients ---
+familiarity_acc_boost: 0.04    # +N pp accuracy per familiarity level above 3
+density_acc_penalty: 0.03      # -N pp accuracy per info-density point above 5
+familiarity_speed_boost: 0.08  # -N% dwell per familiarity level above 3
+density_dwell_penalty: 0.06    # +N% dwell per info-density point above 5
+
+# --- Dropout Probability Parameters ---
+base_enter_exit_rate: 0.1    # P(dropout immediately after enter)
+base_step_dropout_rate: 0.04 # P(dropout after each click)
+
+# --- Stage Difficulty (1 → 5) ---
+stage_base_difficulty:
+  1: 0.2
+  2: 0.35
+  3: 0.5
+  4: 0.65
+  5: 0.8
+
+# --- Stage-wise Information Density Ranges (1–10) ---
+stage_density_range:
+  1: [1, 10]
+  2: [1, 10]
+  3: [1, 10]
+  4: [1, 10]
+  5: [1, 10]
