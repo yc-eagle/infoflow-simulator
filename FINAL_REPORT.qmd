@@ -21,7 +21,7 @@ In the AI-driven media environment, understanding how audiences interact with in
 
 At the same time, laboratory-based approaches such as eye-tracking and EEG can provide detailed measurements of user attention, but they are expensive and difficult to scale.
 
-This project explores an alternative approach: a lightweight telemetry-based simulation framework for analyzing information engagement. By recording simulated user behaviors, including navigation paths, dwell time, and dropout events, the project investigates how information complexity influences attention retention and cognitive load.
+This project explores an alternative approach: a lightweight telemetry-based simulation framework for analyzing information engagement. By recording simulated user behaviors, including navigation paths, dwell time, and dropout events, the project investigates how information complexity influences attention retention and cognitive load.This relationship is consistent with Cognitive Load Theory, which suggests that increased information complexity can increase the mental effort required for processing information @sweller1988cognitive.
 ## Research Question
 The main research question of this project is:
 
@@ -81,8 +81,13 @@ This design allows us to examine how structural complexity affects information e
 ## Figures
 
 # 5. Limitations and Future Work
-
+## Current limitations:
+The dataset is synthetic; findings reflect simulated behaviors, not real human responses. The predictive models are baseline only and not intended for high-stakes decision-making.
 ## Future Extensions
+For CHI 2027, we plan to:
+- Replace virtual agents with human participants (IRB-approved)
+- Introduce multimodal variables (text/video/audio)
+- Apply survival analysis to model attention decay over time
 
 # 6. Team Collaboration
 
