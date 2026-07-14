@@ -47,6 +47,8 @@ The dataset contains the following variables:
 Approximately 500–1,000 behavioral records will be generated for analysis.
 ## Data Preparation
 
+## Data Preview
+
 # 3. Method
 
 ## Simulation Design
@@ -61,15 +63,26 @@ The simulation captures three important engagement indicators:
 - Task abandonment behavior
 
 This design allows us to examine how structural complexity affects information engagement.
+
+## Telemetry Pipeline
+
 ## Analysis Method
 
 # 4. Results
 
 ## Simulation Results
 
+## Behavioral Analysis
+
+## Dashboard Demonstration
+
+## Visualization
+
 ## Figures
 
 # 5. Limitations and Future Work
+
+## Future Extensions
 
 # 6. Team Collaboration
 
