@@ -19,15 +19,30 @@ This is a **methodological prototype** demonstrating a schema-adaptive approach 
 
 ## Quick Start
 
+### Prerequisites
+- Python 3.9+
+- Git
+
+### Run the Dashboard
+
 ```bash
-# 1. Install dependencies
-pip install -r requirements.txt
+# 1. Clone the repository
+git clone https://github.com/yc-eagle/infoflow-simulator.git
+cd infoflow-simulator
 
-# 2. Launch dashboard
-streamlit run app.py
+# 2. (Optional) Create and activate a virtual environment
+python -m venv .venv
+source .venv/bin/activate      # On macOS/Linux
+# .venv\Scripts\activate       # On Windows
 
-# 3. (Optional) Generate stress-test datasets
-cd data && python generate_stress_tests.py
+# 3. Install dependencies
+python -m pip install -r requirements.txt
+
+# 4. Launch the dashboard
+python -m streamlit run app.py
+
+# 5. Open your browser to:
+# http://localhost:8501
 ```
 
 ---
@@ -36,10 +51,10 @@ cd data && python generate_stress_tests.py
 
 | Tab | What It Does |
 |-----|-------------|
-| 📋 **Data Overview** | Column quality audit, missingness report, distribution plots |
-| 📊 **Behavioral Analysis** | Adaptive charts — heatmaps, retention curves, density–dropout scatter, familiarity analysis — selected automatically based on which columns exist in your data |
-| 🤖 **Predictive Model** | Auto-trained logistic regression on dropout prediction with confusion matrix and feature importance |
-| 🔮 **Future Directions** | Research roadmap from current prototype to CHI 2027 submission |
+| **Data Overview** | Column quality audit, missingness report, distribution plots |
+| **Behavioral Analysis** | Adaptive charts — heatmaps, retention curves, density–dropout scatter, familiarity analysis — selected automatically based on which columns exist in your data |
+| **Predictive Model** | Auto-trained logistic regression on dropout prediction with confusion matrix and feature importance |
+| **Future Directions** | Research roadmap from current prototype to CHI 2027 submission |
 
 ---
 
