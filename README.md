@@ -1,6 +1,6 @@
 # InfoFlow Simulator
 
-**A Telemetry Dashboard for Information Engagement Analytics**
+**A Schema-Adaptive Telemetry Dashboard for Information Engagement Analytics**
 
 > *Course:* Programming & Data Analysis for Journalism and Communication in the Age of AI
 > *Instructor:* Yuan (John) Yao
@@ -9,29 +9,54 @@
 
 ---
 
-## Project Overview
+## What Makes This Different
 
-InfoFlow Simulator is a lightweight, simulation-driven telemetry dashboard that models how virtual "users" engage with information of varying complexity. The engine generates behavioral logs—dwell time, click paths, dropout points—which we analyze using SQL and scikit-learn to identify attention-retention patterns. The final output is an interactive 3-tab Streamlit dashboard (Cognitive Heatmap, Dropout Alert, Future Research Blueprint) deployed on Render.
+> **Traditional dashboards require a data scientist to write bespoke queries for every new dataset.** InfoFlow Simulator flips this: upload *any* behavioral CSV, and the dashboard auto-detects its schema, dynamically selects appropriate visualizations, trains a baseline dropout prediction model, and produces a structured analysis report — **no manual configuration needed.**
 
-This is a **methodological prototype**, not a human-subject study. Given our 1.5-week sprint, we prioritize a clean, reproducible pipeline over extensive experimentation. No IRB, no survey bias—just synthetic data and a scalable analytics framework that speaks to both HCI (CHI) and communication (ICA) audiences.
+This is a **methodological prototype** demonstrating a schema-adaptive approach to telemetry analytics. It is not a human-subject study; it uses synthetic data to stress-test the pipeline so that the same engine works reliably when real data arrives.
 
 ---
 
-## Version Note: From Game Analytics to Information Engagement
+## Quick Start
 
-This project began as a game-analytics telemetry study (original title: *Playtesting with Data*). We retained the core DNA—synthetic data generation, SQL-backed telemetry, dropout as a key metric, and an interactive dashboard—but pivoted the application domain for two reasons:
+```bash
+# 1. Install dependencies
+pip install -r requirements.txt
 
-| Factor | Original (Jul 7) | Current (Jul 9) |
-| :--- | :--- | :--- |
-| **Course alignment** | HCI/games focus | Journalism & communication audience analytics |
-| **Timeline** | Open-ended | 1.5-week sprint (Jul 9–16) |
-| **Team capacity** | 2 members, recruiting | 4 members, fulfilled |
-| **Analytical question** | Cognitive bottleneck in puzzles | Information engagement & attention retention |
-| **Predictive output** | Stuck rates | Dropout probability (regression + classification) |
+# 2. Launch dashboard
+streamlit run app.py
 
-**What stayed unchanged:** the technical infrastructure (Python simulation → SQLite storage → EDA → baseline models → Streamlit dashboard), the commitment to reproducibility (GitHub + requirements.txt + deployment), and the transparent disclosure of AI assistance.
+# 3. (Optional) Generate stress-test datasets
+cd data && python generate_stress_tests.py
+```
 
-For a detailed version log, see [VERSION_LOG.md](VERSION_LOG.md).
+---
+
+## Dashboard Tabs
+
+| Tab | What It Does |
+|-----|-------------|
+| 📋 **Data Overview** | Column quality audit, missingness report, distribution plots |
+| 📊 **Behavioral Analysis** | Adaptive charts — heatmaps, retention curves, density–dropout scatter, familiarity analysis — selected automatically based on which columns exist in your data |
+| 🤖 **Predictive Model** | Auto-trained logistic regression on dropout prediction with confusion matrix and feature importance |
+| 🔮 **Future Directions** | Research roadmap from current prototype to CHI 2027 submission |
+
+---
+
+## Schema-Adaptive Engine
+
+The core innovation is `infer_schema()`: a fuzzy column-name matcher that maps arbitrary CSV headers to canonical semantic roles.
+
+| If your CSV has a column named... | It's recognized as... |
+|-----------------------------------|----------------------|
+| `user_id`, `UserID`, `player`, `participant` | `user_id` |
+| `stage`, `block`, `section`, `page`, `node` | `level_id` |
+| `duration`, `time_spent`, `reading_time`, `rt` | `dwell_time` |
+| `churn`, `abandon`, `exit_flag`, `bounce` | `dropout_flag` |
+| `complexity`, `difficulty`, `cognitive_load` | `information_density` |
+| `familiarity`, `expertise`, `proficiency` | `user_familiarity` |
+
+Charts and models are rendered **conditionally** — only if the relevant columns are detected. Different datasets produce different dashboard outputs.
 
 ---
 
@@ -39,66 +64,66 @@ For a detailed version log, see [VERSION_LOG.md](VERSION_LOG.md).
 
 ```
 infoflow-simulator/
-├── data/               # Synthetic dataset (generated)
-├── notebooks/          # EDA and modeling notebooks
-├── src/                # Simulation engine and SQL scripts
-├── dashboard/          # Streamlit app
-├── docs/               # Report and supplementary materials
-├── requirements.txt    # Python dependencies
-├── README.md           # This file
-├── PROPOSAL.md         # Capstone proposal
-├── AI_DISCLOSURE.md    # AI use disclosure statement
-└── VERSION_LOG.md      # Version evolution log
+├── app.py                     # Streamlit dashboard (4-tab, schema-adaptive)
+├── config.yaml                # Simulation engine parameters (externalized)
+├── requirements.txt           # Python dependencies
+├── data/
+│   ├── program.py             # Simulation engine (callable + CLI)
+│   ├── generate_stress_tests.py  # Batch stress-test generator
+│   ├── data_inquire/          # SQL queries + sample database
+│   └── stress_test_output/    # 5 diverse test CSVs
+├── docs/
+│   └── COLLABORATION_GUIDE.md # Git workflow for team members
+├── assets/                    # Slides & images
+├── FINAL_REPORT.qmd           # Quarto report (CHI-targeted)
+├── references.bib             # Academic references
+├── PROPOSAL.md                # Capstone proposal
+├── AI_DISCLOSURE.md           # AI use statement
+├── VERSION_LOG.md             # Version evolution (game → journalism)
+└── README.md                  # This file
 ```
 
 ---
 
 ## Team Members & Roles
 
-| Role | Team Member | Core Responsibilities |
-| :--- | :--- | :--- |
-| **Team Lead / Architect** | Yicheng Jiang | Simulation engine, data schema, final presentation, overall integration |
-| **Data Analyst / Modeler** | Shuoyang Jin | SQL queries, pandas cleaning, regression/classification models |
-| **Frontend / Dashboard** | Jiaxin Wang | Streamlit UI development, deployment configuration |
-| **Narrative / Communication** | Quanquan Lu | Report writing, README, PPT, theoretical framing, AI usage disclosure |
+| Role | Member | Responsibilities |
+|------|--------|-----------------|
+| **Team Lead / Architect** | Yicheng Jiang | Simulation engine, schema inference, config externalization, integration, stress testing |
+| **Data Analyst / Modeler** | Shuoyang Jin | SQL queries, adaptive query generation, logistic regression pipeline, feature importance |
+| **Frontend / Dashboard** | Jiaxin Wang | Streamlit dashboard, schema-adaptive chart rendering, CSV upload & column mapping, deployment |
+| **Narrative / Communication** | Quanquan Lu | Theoretical framing, innovation statement, FINAL_REPORT, literature review, AI disclosure |
 
 ---
 
-## Timeline (Two-Week Sprint)
+## Research Roadmap (Toward CHI 2027)
 
-| Date | Task |
-| :--- | :--- |
-| Jul 9–10 | Simulation engine development; CSV generation |
-| Jul 10–11 | SQL import + queries; EDA + visualizations |
-| Jul 11–12 | Regression + classification baselines; Dashboard prototyping |
-| Jul 12 | Submit 1-page Proposal |
-| Jul 13–14 | Dashboard completion; deployment to Render |
-| Jul 14–15 | Report writing; AI disclosure; PPT preparation |
-| Jul 16 | Final Submission: deployed link + GitHub repo + report |
+```
+Current (Prototype)
+  → Schema-adaptive dashboard validated on 5 synthetic datasets
+  → "Any CSV works" stress test passed
 
----
+Short-Term (Next Semester)
+  → IRB-approved human subject study (N = 20–30)
+  → Expert heuristic evaluation (SUS + think-aloud)
+  → Calibrate simulation parameters against empirical dwell-time data
 
-## Deployment & Deliverables
+Medium-Term (CHI 2027 Target)
+  → Real-world deployment case study (1 newsroom or course partner)
+  → Survival analysis (Cox PH + Kaplan-Meier)
+  → Multimodal data integration (eye-tracking, click heatmaps)
 
-- **GitHub repo:** `https://github.com/[team-name]/infoflow-simulator`
-- **Deployment platform:** Render (free tier)
-- **Final deliverables:** deployed dashboard link + GitHub repo + 4–5 page report + AI-use note
+Long-Term
+  → Cross-domain transfer (EdTech, e-commerce, health)
+  → Open-source pip package release
+  → CSCW / TOCHI journal submission
+```
 
 ---
 
 ## AI Usage Disclosure
 
-We use AI coding assistants (ChatGPT, Copilot) for boilerplate code generation, debugging, and syntax explanation. All AI-generated code is reviewed, tested, and understood by team members before inclusion. The final report includes a full disclosure section documenting specific AI tools used and verification steps taken.
-
-See [AI_DISCLOSURE.md](AI_DISCLOSURE.md) for the complete statement.
-
----
-
-## Contact
-
-Our team is currently at full capacity and not recruiting. However, if you're interested in our work—whether for the methodology, the dashboard design, or the communication angle—we'd love to hear from you. Ideas, feedback, code reviews, and general encouragement are all welcome.
-
-When reaching out, please include **"InfoFlow"** in your subject line.
+AI coding assistants (ChatGPT, Copilot) were used for boilerplate generation, debugging, and syntax explanation. All AI-generated code was reviewed, tested, and understood before integration. The final report narrative was team-written. See [AI_DISCLOSURE.md](AI_DISCLOSURE.md).
 
 ---
 
