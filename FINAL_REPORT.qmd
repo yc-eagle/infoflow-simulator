@@ -20,7 +20,7 @@ bibliography: references.bib
 
 In the AI-driven media environment, understanding *why* audiences lose attention is as critical as understanding *what* they engage with. Traditional communication research methods—surveys, interviews, focus groups—rely on self-reported data that suffers from recall bias and social desirability effects. At the other extreme, laboratory methods such as eye-tracking and EEG provide precise behavioral measurements but are expensive and hard to scale.
 
-This project proposes a **third path**: a lightweight, schema-adaptive telemetry framework that bridges the gap between subjective self-report and costly lab equipment. By combining synthetic behavioral simulation with an auto-configuring analytics dashboard, we demonstrate a reproducible methodology for evaluating information engagement that requires no specialized hardware and minimal technical expertise from end users.
+This project proposes a **third path**: a lightweight, schema-adaptive telemetry framework that bridges the gap between subjective self-report and costly lab equipment. By combining synthetic behavioral simulation with an auto-configuring analytics dashboard, we demonstrate a reproducible methodology for evaluating information engagement that requires no specialized hardware and minimal technical expertise from end users. This approach is grounded in Cognitive Load Theory, which suggests that increased information complexity increases the mental effort required for processing information [@sweller1988cognitive].
 
 ## Research Question
 
