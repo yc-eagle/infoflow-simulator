@@ -27,6 +27,7 @@ This project proposes a **third path**: a lightweight, schema-adaptive telemetry
 The central research question is:
 
 > How does information complexity affect user attention retention, and can these patterns be surfaced automatically from heterogeneous behavioral logs?
+Previous research has investigated how information complexity influences user attention and reading behavior in digital content environments [@khot2018information].
 
 To answer this, we developed (1) a parameterized simulation engine that generates granular telemetry from virtual users navigating information structures of varying complexity, and (2) a schema-adaptive Streamlit dashboard that auto-detects column semantics, generates targeted visualizations, and trains baseline dropout-prediction models without manual configuration.
 
@@ -40,11 +41,11 @@ The system is validated through stress testing: five structurally diverse synthe
 
 Our work sits at the intersection of three literature streams:
 
-**Information Foraging & Cognitive Load.** Pirolli and Card's Information Foraging Theory [@pirolli1999information] models how users navigate information spaces, optimizing for information gain per unit of cognitive cost. Sweller's Cognitive Load Theory [@sweller1988cognitive] posits that task complexity directly predicts performance degradation and task abandonment. Our simulation engine operationalizes both frameworks: `dwell_time` proxies information-processing cost, and `dropout_flag` captures cognitive overload thresholds.
+**Information Foraging & Cognitive Load.** Pirolli and Card's Information Foraging Theory [@pirolli1999information] models how users navigate information spaces, optimizing for information gain per unit of cognitive cost. Sweller's Cognitive Load Theory [@sweller1988cognitive] posits that task complexity directly predicts performance degradation and task abandonment. Later developments of cognitive load research further distinguish different sources of mental effort involved in complex tasks [@paas2003cognitive]. Our simulation engine operationalizes both frameworks: `dwell_time` proxies information-processing cost, and `dropout_flag` captures cognitive overload thresholds.
 
-**Dwell Time as Engagement Signal.** Dwell time has been validated as a behavioral proxy for user interest and cognitive engagement in web search [@liu2014understanding] and content consumption [@yi2014dwell]. Our dashboard inherits this tradition but adds automated schema detection so the metric is surfaced regardless of what the column is named in the uploaded file.
+**Dwell Time as Engagement Signal.** Dwell time has been validated as a behavioral proxy for user interest and cognitive engagement in web search [@liu2014understanding] and content consumption [@yi2014dwell]. Recent research has further explored dwell time as a quantitative indicator of attention and engagement in digital browsing environments [@epstein2022attention]. Our dashboard inherits this tradition but adds automated schema detection so the metric is surfaced regardless of what the column is named in the uploaded file.
 
-**Dashboard Design & Sensemaking.** Few [@few2006dashboard] established design principles for analytical dashboards; Saraiya et al. [@saraiya2005insight] introduced insight-based evaluation for visualization tools. Our dashboard design follows these principles by layering overview → zoom-and-filter → details-on-demand across four tabs, with adaptive chart selection driven by data shape rather than hardcoded configuration.
+**Dashboard Design & Sensemaking.** Few [@few2006dashboard] established design principles for analytical dashboards; Saraiya et al. [@saraiya2005insight] introduced insight-based evaluation for visualization tools. Our dashboard design also follows Shneiderman's overview–zoom–details-on-demand principle for interactive visualization systems [@shneiderman1996eyes].
 
 # 3. Method
 
@@ -65,7 +66,7 @@ The simulation engine (`data/program.py`) generates synthetic behavioral telemet
 
 Table: Key simulation parameters (full list in `config.yaml`).
 
-Each virtual user is assigned individual-difference parameters (speed factor, ability factor, domain familiarity) drawn from normal distributions. Users navigate 1–5 stages of increasing information complexity, with per-click outcomes (correct/incorrect) and per-stage dropout probabilities modulated by difficulty and user traits.
+Each virtual user is assigned individual-difference parameters (speed factor, ability factor, domain familiarity) drawn from normal distributions. Users navigate 1–5 stages of increasing information complexity, with per-click outcomes (correct/incorrect) and per-stage dropout probabilities modulated by difficulty and user traits. The simulation design is also informed by Information Foraging Theory, which describes how users navigate information spaces by balancing expected information value against cognitive effort [@pirolli2007information].
 
 All parameters are externalized to `config.yaml`, enabling stress testing without code modification.
 
@@ -118,7 +119,7 @@ The schema-adaptive dashboard successfully processes all five stress-test datase
 
 ## 4.3 Predictive Model Performance
 
-The logistic regression baseline achieves approximately 70–80% accuracy on the dropout prediction task (varies by dataset), with information density and stage difficulty consistently ranking as the most important features—further supporting the complexity–dropout relationship.
+The logistic regression baseline achieves approximately 70–80% accuracy on the dropout prediction task (varies by dataset), with information density and stage difficulty consistently ranking as the most important features—further supporting the complexity–dropout relationship. Feature importance interpretation follows common practices in interpretable machine learning, where model coefficients provide transparent explanations of predictive factors [@agarwal2019interpretability].
 
 # 5. Limitations and Future Work
 
