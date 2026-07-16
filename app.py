@@ -118,13 +118,13 @@ def run_simulation_data(info_complexity: int, top_n: int) -> pd.DataFrame:
 # ============================================================================
 # Sidebar
 # ============================================================================
-st.sidebar.header("🎛️ Experiment Parameters")
+st.sidebar.header("Experiment Parameters")
 
 info_complexity = st.sidebar.slider("Information Complexity (Simulation Mode)", 1, 5, 3)
 top_n = st.sidebar.slider("Display Top N Blocks", 1, 20, 5)
 
 st.sidebar.markdown("---")
-st.sidebar.subheader("📂 Data Source")
+st.sidebar.subheader(" Data Source")
 uploaded_file = st.sidebar.file_uploader(
     "Upload Behavior Log CSV",
     type=["csv"],
@@ -149,17 +149,17 @@ if uploaded_file is not None:
             # Normalize column references
             df = raw_df.copy()
             st.sidebar.success(
-                f"✅ Loaded: {len(raw_df):,} rows × {len(raw_df.columns)} cols\n\n"
+                f" Loaded: {len(raw_df):,} rows × {len(raw_df.columns)} cols\n\n"
                 f"Mapped: {', '.join(f'{k}→{v}' for k, v in schema.items())}"
             )
         else:
-            st.sidebar.warning("⚠️ No recognizable columns. Falling back to simulation.")
+            st.sidebar.warning("No recognizable columns. Falling back to simulation.")
     except Exception as e:
-        st.sidebar.error(f"❌ Failed to parse CSV: {e}")
+        st.sidebar.error(f" Failed to parse CSV: {e}")
 
 if use_simulation:
     df = run_simulation_data(info_complexity, top_n)
-    st.sidebar.info("🔬 Current mode: **Simulated Data**")
+    st.sidebar.info(" Current mode: **Simulated Data**")
 
 # Ensure we have a working DataFrame
 if df is None or df.empty:
@@ -169,10 +169,10 @@ if df is None or df.empty:
 # Main Dashboard
 # ============================================================================
 tab1, tab2, tab3, tab4 = st.tabs([
-    "📋 Data Overview",
-    "📊 Behavioral Analysis",
-    "🤖 Predictive Model",
-    "🔮 Future Directions",
+    " Data Overview",
+    " Behavioral Analysis",
+    " Predictive Model",
+    " Future Directions",
 ])
 
 # ============================================================================
@@ -193,19 +193,19 @@ with tab1:
             st.metric("Overall Dropout Rate", f"{drop_rate:.2%}")
 
     st.markdown("---")
-    st.subheader("🔍 Column Quality Report")
+    st.subheader(" Column Quality Report")
     quality = data_quality_report(df)
     st.dataframe(quality, use_container_width=True, hide_index=True)
 
     st.markdown("---")
-    st.subheader("📄 Raw Data (first 50 rows)")
+    st.subheader(" Raw Data (first 50 rows)")
     st.dataframe(df.head(50), use_container_width=True)
 
     # Distributions for numeric columns
     numeric_cols = df.select_dtypes(include=["int64", "float64"]).columns.tolist()
     if numeric_cols:
         st.markdown("---")
-        st.subheader("📈 Numeric Column Distributions")
+        st.subheader(" Numeric Column Distributions")
         n_plots = min(len(numeric_cols), 6)
         cols_per_row = min(3, n_plots)
         rows_needed = (n_plots + cols_per_row - 1) // cols_per_row
@@ -242,7 +242,7 @@ with tab2:
     level_col = schema_for_charts.get("level_id", None)
     if dwell_col and level_col:
         charts_rendered += 1
-        st.markdown(f"### 🗺️ Attention Distribution: `{level_col}` × `{dwell_col}`")
+        st.markdown(f"###  Attention Distribution: `{level_col}` × `{dwell_col}`")
 
         try:
             pivot = df.pivot_table(index=level_col, values=dwell_col, aggfunc="mean")
@@ -263,7 +263,7 @@ with tab2:
     dropout_col = schema_for_charts.get("dropout_flag", None)
     if dropout_col and level_col:
         charts_rendered += 1
-        st.markdown(f"### 📉 Retention Trend by `{level_col}`")
+        st.markdown(f"###  Retention Trend by `{level_col}`")
 
         try:
             stage_order = sorted(df[level_col].dropna().unique())
@@ -284,7 +284,7 @@ with tab2:
                 fig.update_layout(yaxis_range=[0, 1.05])
                 st.plotly_chart(fig, use_container_width=True)
 
-                st.markdown("**🚨 High-Risk Stages**")
+                st.markdown("** High-Risk Stages**")
                 high_risk = ret_df[ret_df["dropout_rate"] >= 0.5][level_col].tolist()
                 if high_risk:
                     st.warning(f"Significant churn at {level_col}(s): **{high_risk}**")
@@ -299,7 +299,7 @@ with tab2:
     density_col = schema_for_charts.get("information_density", None)
     if density_col and dropout_col:
         charts_rendered += 1
-        st.markdown(f"### 📊 Information Density vs. Dropout")
+        st.markdown(f"###  Information Density vs. Dropout")
 
         try:
             density_vals = pd.to_numeric(df[density_col], errors="coerce")
@@ -325,7 +325,7 @@ with tab2:
     fam_col = schema_for_charts.get("user_familiarity", None)
     if fam_col and dropout_col:
         charts_rendered += 1
-        st.markdown(f"### 👤 Familiarity vs. Dropout")
+        st.markdown(f"###  Familiarity vs. Dropout")
 
         try:
             fam_vals = pd.to_numeric(df[fam_col], errors="coerce")
@@ -347,7 +347,7 @@ with tab2:
     action_col = schema_for_charts.get("action_type", None)
     if action_col:
         charts_rendered += 1
-        st.markdown(f"### 🏷️ Action Type Distribution")
+        st.markdown(f"###  Action Type Distribution")
 
         try:
             vc = df[action_col].value_counts().reset_index()
@@ -361,7 +361,7 @@ with tab2:
     numeric_cols_raw = df.select_dtypes(include=["int64", "float64"]).columns.tolist()
     if len(numeric_cols_raw) >= 2:
         charts_rendered += 1
-        st.markdown("### 🔗 Numeric Feature Correlation")
+        st.markdown("###  Numeric Feature Correlation")
         try:
             corr = df[numeric_cols_raw].corr()
             fig = px.imshow(corr, text_auto=".2f", aspect="auto",
@@ -378,7 +378,7 @@ with tab2:
 # TAB 3: Predictive Model
 # ============================================================================
 with tab3:
-    st.subheader("🤖 Dropout Prediction Model")
+    st.subheader(" Dropout Prediction Model")
 
     dropout_col = schema.get("dropout_flag") if schema else "dropout_flag"
 
@@ -487,14 +487,14 @@ with tab4:
     st.subheader("Research Roadmap")
 
     st.markdown("""
-    ### 🎯 Current Stage: Schema-Adaptive Prototype
+    ###  Current Stage: Schema-Adaptive Prototype
 
     The dashboard you are viewing can ingest **any behavioral CSV**, auto-detect
     its schema, and generate targeted analytics without manual configuration.
 
     ---
 
-    ### 📍 Short-Term (Next Semester)
+    ###  Short-Term (Next Semester)
     - **IRB-approved human subject study** — 20–30 participants performing
       information-browsing tasks under controlled complexity conditions
     - **Simulated vs. real comparison** — validate simulation engine parameters
@@ -504,7 +504,7 @@ with tab4:
 
     ---
 
-    ### 📍 Medium-Term (CHI 2027 Target)
+    ###  Medium-Term (CHI 2027 Target)
     - **Real-world deployment** — partner with 1 newsroom or university course to
       collect authentic engagement telemetry
     - **Multimodal expansion** — incorporate eye-tracking and click heatmap data
@@ -515,7 +515,7 @@ with tab4:
 
     ---
 
-    ### 📍 Long-Term Vision
+    ###  Long-Term Vision
     - **Cross-domain transfer** — apply the same pipeline to EdTech (learning
       dropout), e-commerce (cart abandonment), health (engagement retention)
     - **Open-source toolkit** — release as a `pip`-installable package for
