@@ -8,6 +8,14 @@
 > *Date:* July 2026
 
 ---
+## Final Report
+
+The complete project report is available in the following formats:
+
+- PDF Report: [FINAL_REPORT.pdf](FINAL_REPORT.pdf)
+- Quarto Source: [FINAL_REPORT.qmd](FINAL_REPORT.qmd)
+
+---
 
 ## What Makes This Different
 
@@ -108,6 +116,18 @@ infoflow-simulator/
 | **Data Analyst / Modeler** | Shuoyang Jin | SQL queries, adaptive query generation, logistic regression pipeline, feature importance |
 | **Frontend / Dashboard** | Jiaxin Wang | Streamlit dashboard, schema-adaptive chart rendering, CSV upload & column mapping, deployment |
 | **Narrative / Communication** | Quanquan Lu | Theoretical framing, innovation statement, FINAL_REPORT, literature review, AI disclosure |
+
+---
+
+## Development Challenges
+
+During development, the main challenges included:
+
+- Maintaining consistency between the simulation engine and dashboard parameters.
+- Supporting different behavioral log schemas through automatic column detection.
+- Ensuring reproducibility through externalized configuration and Git-based collaboration.
+
+These challenges were addressed through schema inference, shared configuration files, and branch-based development workflows.
 
 ---
 
