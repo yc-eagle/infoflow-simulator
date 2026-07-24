@@ -2,6 +2,24 @@
 
 ---
 
+## v0.4 — Final Polish & Deployment (Jul 24, 2026)
+
+**Title:** InfoFlow Simulator: Final fixes, config unification, and public deployment
+
+**Core changes:**
+
+- **Deployment** — Live dashboard on Streamlit Community Cloud: [infoflow-simulator.streamlit.app](https://infoflow-simulator.streamlit.app/)
+- **Config unification** — `app.py` now loads all constants from `config.yaml` via `_CFG` dict; no more hardcoded duplicates
+- **Simulation integration** — `app.py` fallback mode now calls `data/program.py` `run_simulation()` directly instead of a stripped-down reimplementation
+- **Stress test fix** — `stress_4_low_familiarity` now actually skews user familiarity low (`familiarity_low_bias=True`, ~70% at levels 1–2); dropout 46.43% vs baseline 40.98%
+- **`program.py`** — Added `familiarity_low_bias` parameter for weighted familiarity distribution
+- **`data_inquire/` cleanup** — `add_database.py` rewritten as proper CSV→SQLite import; `plot_chart.py` deduplicated; SQL column names unified to English; renamed `familiarity&stage_dropout.sql` → `familiarity_stage_dropout.sql`
+- **`export_tables_en.py`** — Simplified to standardise column names across existing Excel sheets
+- **README** — Added student IDs, live demo link, `LICENSE` file
+- **Stress test data** — All 5 datasets regenerated with fixes applied
+
+---
+
 ## v0.1 — Original Concept (Jul 7, 2026)
 
 **Title:** Playtesting with Data: A Telemetry Dashboard for Game Analytics and Cognitive Bottleneck Evaluation
