@@ -122,10 +122,10 @@ infoflow-simulator/
 
 | Role | Member | Student ID | Responsibilities |
 |------|--------|------------|-----------------|
-| **Team Lead / Architect** | Yicheng Jiang  | 202420104036 | Simulation engine, schema inference, config externalization, integration, stress testing |
-| **Data Analyst / Modeler** | Shuoyang Jin  | 202420104017 | SQL queries, adaptive query generation, logistic regression pipeline, feature importance |
-| **Frontend / Dashboard** | Jiaxin Wang  | 202520120029 | Streamlit dashboard, schema-adaptive chart rendering, CSV upload & column mapping, deployment |
-| **Narrative / Communication** | Quanquan Lu  | 202420104052 | Theoretical framing, innovation statement, FINAL_REPORT, literature review, AI disclosure |
+| **Team Lead / Architect** | Yicheng Jiang | 202420104036 | Simulation engine, schema inference, config externalization, integration, stress testing |
+| **Data Analyst / Modeler** | Shuoyang Jin | 202420104017 | SQL queries, adaptive query generation, logistic regression pipeline, feature importance |
+| **Frontend / Dashboard** | Jiaxin Wang | 202520120029 | Streamlit dashboard, schema-adaptive chart rendering, CSV upload & column mapping, deployment |
+| **Narrative / Communication** | Quanquan Lu | 202420104052 | Theoretical framing, innovation statement, FINAL_REPORT, literature review, AI disclosure |
 
 ---
 

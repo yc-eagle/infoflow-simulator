@@ -14,14 +14,14 @@ def main():
     cur = conn.cursor()
 
     for sql_file in SQL_FILES:
-        print("▶️ 执行:", sql_file)
+        print("Running:", sql_file)
         with open(sql_file, "r", encoding="utf-8") as f:
             cur.executescript(f.read())
-        print("✅ 完成:", sql_file)
+        print("  Done:", sql_file)
 
     conn.commit()
     conn.close()
-    print("\n🎉 三张表已成功创建！")
+    print("\nAll 3 tables created successfully!")
 
 if __name__ == "__main__":
     main()
