@@ -6,8 +6,18 @@
 > *Instructor:* Yuan (John) Yao
 > *Team:* Yicheng Jiang (Lead), Shuoyang Jin, Jiaxin Wang, Quanquan Lu
 > *Date:* July 2026
+> *Live Demo:* [infoflow-simulator.streamlit.app](https://infoflow-simulator.streamlit.app/)
 
 ---
+
+##  Live Demo
+
+**Try it now:** [https://infoflow-simulator.streamlit.app/](https://infoflow-simulator.streamlit.app/)
+
+Upload any behavioral CSV or explore the built-in simulation data — no setup needed.
+
+---
+
 ## Final Report
 
 The complete project report is available in the following formats:
@@ -31,7 +41,7 @@ This is a **methodological prototype** demonstrating a schema-adaptive approach 
 - Python 3.9+
 - Git
 
-### Run the Dashboard
+### Run Locally
 
 ```bash
 # 1. Clone the repository
@@ -110,12 +120,12 @@ infoflow-simulator/
 
 ## Team Members & Roles
 
-| Role | Member | Responsibilities |
-|------|--------|-----------------|
-| **Team Lead / Architect** | Yicheng Jiang | Simulation engine, schema inference, config externalization, integration, stress testing |
-| **Data Analyst / Modeler** | Shuoyang Jin | SQL queries, adaptive query generation, logistic regression pipeline, feature importance |
-| **Frontend / Dashboard** | Jiaxin Wang | Streamlit dashboard, schema-adaptive chart rendering, CSV upload & column mapping, deployment |
-| **Narrative / Communication** | Quanquan Lu | Theoretical framing, innovation statement, FINAL_REPORT, literature review, AI disclosure |
+| Role | Member | Student ID | Responsibilities |
+|------|--------|------------|-----------------|
+| **Team Lead / Architect** | Yicheng Jiang  | 202420104036 | Simulation engine, schema inference, config externalization, integration, stress testing |
+| **Data Analyst / Modeler** | Shuoyang Jin  | 202420104017 | SQL queries, adaptive query generation, logistic regression pipeline, feature importance |
+| **Frontend / Dashboard** | Jiaxin Wang  | 202520120029 | Streamlit dashboard, schema-adaptive chart rendering, CSV upload & column mapping, deployment |
+| **Narrative / Communication** | Quanquan Lu  | 202420104052 | Theoretical framing, innovation statement, FINAL_REPORT, literature review, AI disclosure |
 
 ---
 

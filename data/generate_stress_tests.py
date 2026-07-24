@@ -44,7 +44,7 @@ SCENARIOS = {
         "target_logs": 2000,
         "num_users": 130,
         "max_stage": 5,
-        # users skewed toward low familiarity (override in generated data)
+        "familiarity_low_bias": True,
     },
     "stress_5_extra_wide": {
         "random_seed": 123,
@@ -54,13 +54,23 @@ SCENARIOS = {
     },
 }
 
+SCENARIO_DESCRIPTIONS = {
+    "stress_1_default": "Baseline configuration (uniform familiarity distribution)",
+    "stress_2_small_sample": "Small-N edge case (uniform familiarity)",
+    "stress_3_high_difficulty": "Elevated difficulty across all stages (uniform familiarity)",
+    "stress_4_low_familiarity": "Low-familiarity skew: ~70% of users at familiarity levels 1–2",
+    "stress_5_extra_wide": "High-volume stress test (uniform familiarity)",
+}
+
 
 def main():
     os.makedirs("stress_test_output", exist_ok=True)
 
     for name, overrides in SCENARIOS.items():
+        desc = SCENARIO_DESCRIPTIONS.get(name, "")
         print(f"\n{'='*50}")
         print(f"Generating: {name}")
+        print(f"Description: {desc}")
         print(f"Overrides: {overrides}")
         print(f"{'='*50}")
 

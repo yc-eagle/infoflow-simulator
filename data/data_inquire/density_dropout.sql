@@ -13,10 +13,10 @@ session_summary AS (
     FROM session_marked
     GROUP BY session_id
 )
-SELECT 
-    info_density_tier AS 信息密度等级,
-    COUNT(*) AS 会话总数,
-    ROUND(AVG(dropout_flag) * 100, 2) AS 放弃率_百分比
+SELECT
+    info_density_tier AS information_density,
+    COUNT(*) AS session_count,
+    ROUND(AVG(dropout_flag) * 100, 2) AS dropout_rate_pct
 FROM session_summary
 GROUP BY info_density_tier
 ORDER BY info_density_tier;
