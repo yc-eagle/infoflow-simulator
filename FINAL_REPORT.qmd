@@ -156,13 +156,93 @@ The logistic regression baseline achieves approximately 70–80% accuracy on the
 
 The team followed a Git branching workflow: each member developed independently on `feature/<name>` branches, opening Pull Requests for review by the team lead before merging to `main`.
 
-# 7. Conclusion
+# 7. Development Challenges and Solutions
+
+During the development of InfoFlow Simulator, we encountered several technical and workflow-related bottlenecks while transforming the initial prototype into a complete telemetry analytics system. These challenges emerged from different stages of development, including data processing, dashboard generalization, environment configuration, version control, and interdisciplinary collaboration.
+
+Rather than being isolated technical issues, these problems were interconnected. Solving them required continuous debugging, communication between team members, and iterative improvements to both the system architecture and our development workflow.
+
+## 7.1 Data Processing and Analytical Pipeline Challenges
+
+One major challenge was transforming raw behavioral telemetry logs into reliable analytical data.
+
+The simulation engine generated detailed interaction-level records, including user actions, timestamps, dwell time, and dropout events. However, these raw logs were not immediately suitable for statistical analysis and predictive modeling because different analytical tasks required different levels of data granularity.
+
+During the SQL analysis stage, we encountered an important statistical inconsistency. Initial dropout rate calculations showed a 0% clearance rate for several stages. After debugging, we discovered that the issue was caused by incorrectly grouping exit records using the current `level_id` rather than tracking the starting stage of each user session. This resulted in incorrect aggregation logic and misleading analytical results.
+
+Another challenge was the mismatch between telemetry records and prediction targets. The raw behavioral logs were recorded at the single-action level, while `dropout_flag` represented a session-level outcome. Directly using action-level records for prediction introduced the risk of inaccurate feature construction and potential information leakage. Therefore, we needed to redesign the feature engineering process by aggregating behavioral records at the session level and ensuring that only information available before dropout prediction was included.
+
+In addition, we encountered technical issues during data storage and processing. When importing CSV files into SQLite, automatic data type inference sometimes caused unexpected aggregation problems. We also needed to handle issues related to data cleaning, encoding formats, and compatibility between Python libraries.
+
+Through repeated validation and debugging, we established a more reliable pipeline from telemetry generation to SQL analysis and predictive modeling. Shuoyang Jin contributed significantly to solving these issues through database analysis, feature construction, and model development.
+
+## 7.2 Dashboard Generalization and Data Compatibility Challenges
+
+Another major challenge was improving the dashboard from a fixed-schema prototype into a more flexible analytical system.
+
+The initial implementation depended on predefined column names. However, real-world behavioral datasets often contain inconsistent naming conventions, abbreviations, synonyms, or different semantic expressions. For example, variables representing the same concept may appear as `dwell_time`, `duration`, or `reading_time`.
+
+This created a limitation: although different datasets might contain equivalent behavioral information, the dashboard could not automatically recognize them without manual modification.
+
+To address this issue, we developed a schema-adaptive mechanism that automatically identifies column meanings and maps different input formats into standardized semantic categories. Implementing this mechanism required solving several engineering problems.
+
+First, we encountered file path and environment compatibility issues. Different operating systems and terminal environments produced errors such as `FileNotFoundError` and Bash path parsing problems when loading datasets.
+
+Second, we faced dependency and module recognition problems. Some functions used in the dashboard were initially unclear regarding whether they belonged to internal modules or external libraries, causing import errors during testing. We resolved these problems by reviewing dependencies, restructuring imports, and improving environment configuration.
+
+Third, when testing datasets containing non-English column names, we needed to ensure correct UTF-8 encoding handling to prevent data corruption during file reading and semantic matching.
+
+Finally, we encountered Python environment isolation problems where project modules could not be recognized because the project root directory was not correctly included in the execution path.
+
+Through continuous testing and debugging, we improved the robustness of the dashboard and successfully transformed it from a dataset-specific visualization tool into a schema-adaptive analytics framework. Jiaxin Wang contributed to solving these challenges through dashboard implementation, visualization development, and data compatibility testing.
+
+## 7.3 System Integration and Development Workflow Challenges
+
+Beyond individual technical modules, integrating different components into a unified system was another important challenge.
+
+Because different team members developed separate components independently, maintaining consistency between local environments, branches, and the shared repository became necessary.
+
+During development, we encountered several Git-related problems, including SSH authentication failures, HTTPS credential issues, branch synchronization problems, and differences between local repositories, forked repositories, and the upstream repository.
+
+These problems affected code synchronization and delayed integration because team members sometimes worked with different versions of files. Resolving these issues required understanding Git workflows more deeply, including branch management, pull requests, merging strategies, and remote repository configuration.
+
+Jiang Yicheng helped coordinate the integration process, debug SSH and HTTPS connection problems, and assist team members when repository synchronization issues occurred. Through communication and shared troubleshooting, we gradually established a more stable workflow based on feature branches, pull requests, and regular synchronization with the main branch.
+
+This process also improved our understanding that successful software development depends not only on writing functional code but also on maintaining reliable collaboration infrastructure.
+
+## 7.4 Learning New Technical Workflows Through Collaboration
+
+As an interdisciplinary project combining communication research, programming, and data analysis, another challenge was adapting to unfamiliar technical workflows.
+
+Team members entered the project with different levels of programming experience. Therefore, learning programming environments, debugging methods, Git operations, and software development practices required continuous adaptation.
+
+For Quanquan Lu, who had limited programming experience before this project, many parts of the development workflow were initially unfamiliar. During the early stage, he encountered difficulties understanding project structures, running code, and participating in collaborative development.
+
+One practical challenge was learning proper Git collaboration practices. At the beginning, development work was directly conducted on the main branch because the branching workflow was not yet fully understood. Later, after communicating with other team members and learning from their previous experience, the workflow was adjusted to feature branches and pull requests, which improved development safety and code management.
+
+Another challenge was unstable network conditions during synchronization, which occasionally prevented successful data and code updates between local environments and remote repositories. Through discussion with teammates, we identified possible causes and adopted alternative synchronization approaches.
+
+With continuous communication, guidance from teammates, and assistance from AI tools for debugging and technical explanations, Quanquan gradually became familiar with the complete development workflow and was able to contribute effectively to documentation, theoretical framing, and report development.
+
+This experience demonstrated the importance of knowledge sharing in interdisciplinary teams. Team members not only divided tasks but also helped each other overcome technical barriers throughout the development process.
+
+## 7.5 Lessons Learned
+
+The development process of InfoFlow Simulator showed that building a computational research prototype requires continuous problem solving beyond individual programming tasks.
+
+The challenges we encountered were closely connected: incorrect data aggregation could affect analytical validity, limited schema flexibility could reduce system usability, and unstable collaboration workflows could slow down integration.
+
+By repeatedly debugging problems, discussing solutions, and improving our workflow, we learned the importance of reproducible development practices, modular system design, and interdisciplinary collaboration.
+
+These experiences shaped both the final system and our understanding of how computational methods can support communication research.
+
+# 8. Conclusion
 
 InfoFlow Simulator demonstrates a **schema-adaptive approach to behavioral telemetry analytics**: any CSV with user-interaction logs can be uploaded, auto-analyzed, and modeled without manual configuration. This lowers the technical barrier for communication researchers and newsroom analysts who need data-driven insights into audience attention and dropout patterns.
 
 The current prototype is a methodological foundation. With the addition of human-subject validation, survival analysis, and a real-world deployment case study, this pipeline forms the core of a competitive CHI 2027 submission.
 
-# 8. AI Usage Disclosure
+# 9. AI Usage Disclosure
 
 AI coding assistants (ChatGPT, GitHub Copilot) were used during this project for boilerplate code generation, debugging, and library syntax explanation. All AI-generated code was reviewed, tested, and understood by team members before integration. The final report narrative and theoretical framing were written by the team. See `AI_DISCLOSURE.md` for the complete statement.
 
