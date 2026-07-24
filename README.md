@@ -6,8 +6,18 @@
 > *Instructor:* Yuan (John) Yao
 > *Team:* Yicheng Jiang (Lead), Shuoyang Jin, Jiaxin Wang, Quanquan Lu
 > *Date:* July 2026
+> *Live Demo:* [infoflow-simulator.streamlit.app](https://infoflow-simulator.streamlit.app/)
 
 ---
+
+##  Live Demo
+
+**Try it now:** [https://infoflow-simulator.streamlit.app/](https://infoflow-simulator.streamlit.app/)
+
+Upload any behavioral CSV or explore the built-in simulation data — no setup needed.
+
+---
+
 ## Final Report
 
 The complete project report is available in the following formats:
@@ -31,7 +41,7 @@ This is a **methodological prototype** demonstrating a schema-adaptive approach 
 - Python 3.9+
 - Git
 
-### Run the Dashboard
+### Run Locally
 
 ```bash
 # 1. Clone the repository
