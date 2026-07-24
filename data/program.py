@@ -56,6 +56,7 @@ def run_simulation(
     base_step_dropout_rate=None,
     stage_base_difficulty=None,
     stage_density_range=None,
+    familiarity_low_bias=None,
     output_csv=None,
 ):
     """
@@ -99,7 +100,12 @@ def run_simulation(
     user_ids = [f"user_{i:03d}" for i in range(1, N_USERS + 1)]
     user_speed_factor = np.clip(np.random.normal(1.0, 0.2, N_USERS), 0.6, 1.7)
     user_ability_factor = np.clip(np.random.normal(1.0, 0.12, N_USERS), 0.75, 1.25)
-    user_familiarity = np.random.randint(1, 6, size=N_USERS)
+    if familiarity_low_bias:
+        # Skew familiarity toward lower values: 40% level 1, 30% level 2, 20% level 3, 7% level 4, 3% level 5
+        user_familiarity = np.random.choice([1, 2, 3, 4, 5], size=N_USERS,
+                                             p=[0.40, 0.30, 0.20, 0.07, 0.03])
+    else:
+        user_familiarity = np.random.randint(1, 6, size=N_USERS)
 
     # ============================================================
     # 3. Core simulation loop

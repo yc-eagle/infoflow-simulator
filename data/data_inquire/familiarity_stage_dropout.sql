@@ -14,11 +14,11 @@ session_summary AS (
     FROM session_marked
     GROUP BY session_id
 )
-SELECT 
-    user_familiarity AS 用户熟悉度,
-    start_stage AS 起始阶段,
-    COUNT(*) AS 会话数,
-    ROUND(AVG(dropout_flag) * 100, 2) AS 放弃率_百分比
+SELECT
+    user_familiarity,
+    start_stage,
+    COUNT(*) AS session_count,
+    ROUND(AVG(dropout_flag) * 100, 2) AS dropout_rate_pct
 FROM session_summary
 GROUP BY user_familiarity, start_stage
 ORDER BY user_familiarity, start_stage;

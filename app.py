@@ -18,6 +18,20 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import (accuracy_score, precision_score, recall_score,
                              confusion_matrix, classification_report)
 from sklearn.preprocessing import StandardScaler
+import os
+import sys
+
+# Allow importing from data/ directory
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "data"))
+try:
+    import yaml
+    _CONFIG_PATH = os.path.join(os.path.dirname(__file__), "config.yaml")
+    with open(_CONFIG_PATH, "r", encoding="utf-8") as f:
+        _CFG = yaml.safe_load(f)
+except Exception:
+    _CFG = {}
+
+from program import run_simulation as engine_simulate
 
 # ============================================================================
 # Page Config
@@ -29,12 +43,12 @@ st.set_page_config(
 )
 
 # ============================================================================
-# Constants
+# Constants (loaded from config.yaml with hardcoded fallbacks)
 # ============================================================================
-RANDOM_SEED = 710
-MAX_STAGE = 5
-BASE_DWELL_TIME = 2.5
-STAGE_BASE_DIFFICULTY = {1: 0.2, 2: 0.35, 3: 0.5, 4: 0.65, 5: 0.8}
+RANDOM_SEED = _CFG.get("random_seed", 710)
+MAX_STAGE = _CFG.get("max_stage", 5)
+BASE_DWELL_TIME = _CFG.get("base_dwell_time", 2.5)
+STAGE_BASE_DIFFICULTY = _CFG.get("stage_base_difficulty", {1: 0.2, 2: 0.35, 3: 0.5, 4: 0.65, 5: 0.8})
 
 # Column name aliases for fuzzy matching
 COLUMN_ALIASES = {
@@ -99,20 +113,12 @@ def data_quality_report(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def run_simulation_data(info_complexity: int, top_n: int) -> pd.DataFrame:
-    """Generate synthetic behavioral data (fallback when no CSV uploaded)."""
-    np.random.seed(RANDOM_SEED)
-    display_stage = min(top_n, MAX_STAGE)
-    stages = list(range(1, display_stage + 1))
-
-    data = {
-        "level_id": stages,
-        "dwell_time": [round(max(0.3, np.random.normal(
-            BASE_DWELL_TIME * (1 + STAGE_BASE_DIFFICULTY[s] * 0.8), 0.5)), 2)
-            for s in stages],
-        "dropout_flag": [1 if s > info_complexity else 0 for s in stages],
-        "info_complexity": [STAGE_BASE_DIFFICULTY[s] for s in stages],
-    }
-    return pd.DataFrame(data)
+    """Generate synthetic behavioral data using the full simulation engine (fallback)."""
+    df = engine_simulate(random_seed=RANDOM_SEED)
+    # Filter to requested number of stages for display
+    if top_n < MAX_STAGE:
+        df = df[df["level_id"] <= top_n]
+    return df
 
 
 # ============================================================================
